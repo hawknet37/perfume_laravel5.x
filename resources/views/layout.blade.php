@@ -185,6 +185,7 @@
                                                 }
                                         </style>
                                             <button class="dropbtn">
+                                                <img width="20%" src="{{Session::get('customer_picture')}}" alt="">
                                                 <span>{{ Session::get('customer_name') }}</span>
                                                 <i class="fa fa-caret-down"></i>
                                             </button>
@@ -234,11 +235,25 @@
                                 @else
                                 <li><a href="{{URL::to('/checkout')}}" class="active">Trang chủ</a></li>
                                 @endif
-                                <li class="dropdown"><a href="#">Sản phẩm<i class="fa fa-angle-down"></i></a>
+                                <li class="dropdown">
+                                    <a href="#">Sản phẩm<i class="fa fa-angle-down"></i></a>
                                     <ul role="menu" class="sub-menu">
-                                        @foreach($category as $key => $danhmuc)
+                                        <?php
+                                        $categoryArray = $category->toArray();
+                                        $reversedCategories = array_reverse($categoryArray);
+                                        ?>
+                                        @foreach($reversedCategories as $key => $danhmuc)
+                                        <li>
+                                            <a href="{{URL::to('/danh-muc/'.$danhmuc->slug_category_product)}}">{{$danhmuc->category_name}}</a>
+                                        </li>
+                                        @endforeach
+                                    </ul>
+                                </li>
+                                <li class="dropdown"><a href="#">Thương hiệu<i class="fa fa-angle-down"></i></a>
+                                    <ul role="menu" class="sub-menu">
+                                        @foreach($brand as $key => $thuonghieu)
                                         <li><a
-                                                href="{{URL::to('/danh-muc/'.$danhmuc->slug_category_product)}}">{{$danhmuc->category_name}}</a>
+                                                href="{{URL::to('/thuong-hieu/'.$thuonghieu->brand_slug)}}">{{$thuonghieu->brand_name}}</a>
                                         </li>
                                         @endforeach
                                     </ul>

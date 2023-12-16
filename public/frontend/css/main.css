@@ -1,23 +1,19 @@
 ﻿/*************************
 *******Typography******
 **************************/
-@import url(
-    http://fonts.googleapis.com/css?family=Roboto:400,
-    300,
-    400italic,
-    500,
-    700,
-    100
-);
-@import url(
-    http://fonts.googleapis.com/css?family=Open+Sans:400,
-    800,
-    300,
-    600,
-    700
-);
-@import url(http://fonts.googleapis.com/css?family=Abel);
 
+@import url(http://fonts.googleapis.com/css?family=Roboto:400,
+ 300,
+400italic,
+500,
+700,
+100);
+@import url(http://fonts.googleapis.com/css?family=Open+Sans:400,
+ 800,
+300,
+600,
+700);
+@import url(http://fonts.googleapis.com/css?family=Abel);
 body {
     font-family: "Roboto", sans-serif;
     background: ;
@@ -64,6 +60,7 @@ h6 {
 .navbar-toggle {
     background-color: #000;
 }
+
 .productinfo.text-center img {
     height: 225px;
     display: block;
@@ -71,9 +68,11 @@ h6 {
     transition: all 0.4s;
     margin-bottom: 30px;
 }
+
 .productinfo.text-center img:hover {
     transform: scale(1.2);
 }
+
 a#scrollUp {
     bottom: 0px;
     right: 10px;
@@ -87,6 +86,7 @@ a#scrollUp {
 a#scrollUp i {
     font-size: 30px;
 }
+
 
 /*************************
 *******Header CSS******
@@ -288,13 +288,14 @@ a#scrollUp i {
     background-position: 130px;
 }
 
+
 /*  Dropdown menu*/
 
 .navbar-header .navbar-toggle .icon-bar {
     background-color: #fff;
 }
 
-.nav.navbar-nav > li:hover > ul.sub-menu {
+.nav.navbar-nav>li:hover>ul.sub-menu {
     display: block;
     -webkit-animation: fadeInUp 400ms;
     -moz-animation: fadeInUp 400ms;
@@ -349,13 +350,13 @@ ul.sub-menu {
         -webkit-transform: translateY(20px);
         transform: translateY(20px);
     }
-
     100% {
         opacity: 1;
         -webkit-transform: translateY(0);
         transform: translateY(0);
     }
 }
+
 
 /*************************
 *******Footer CSS******
@@ -465,6 +466,7 @@ ul.sub-menu {
     position: relative;
     overflow: hidden;
 }
+
 .address img {
     width: 100%;
 }
@@ -575,6 +577,7 @@ ul.sub-menu {
     text-decoration: underline;
 }
 
+
 /*************************
 ******* Home ******
 **************************/
@@ -668,6 +671,7 @@ ul.sub-menu {
     padding-bottom: 20px;
     padding-top: 15px;
 }
+
 .left-sidebar h2,
 .brands_products h2 {
     color: #47a447;
@@ -740,7 +744,7 @@ h2.title:before {
     text-transform: uppercase;
 }
 
-.panel-group .panel-heading + .panel-collapse .panel-body {
+.panel-group .panel-heading+.panel-collapse .panel-body {
     border-top: 0 none;
 }
 
@@ -854,6 +858,7 @@ h2.title {
     overflow: hidden;
     margin-bottom: 30px;
 }
+
 .product-image-wrapper:hover {
     /* border: 1px solid #47a447; */
 }
@@ -875,6 +880,7 @@ h2.title {
     font-size: 16px;
     font-weight: 700;
 }
+
 .product-overlay h2 {
     color: #fff;
     font-family: "Roboto", sans-serif;
@@ -905,7 +911,6 @@ h2.title {
     color: rgb(67, 70, 87);
     font-weight: 400;
     text-decoration: unset;
-
     overflow: hidden;
     display: -webkit-box;
     -webkit-box-orient: vertical;
@@ -1093,8 +1098,7 @@ h2.title {
     background: #ccccc6;
 }
 
-.recommended_items h2 {
-}
+.recommended_items h2 {}
 
 .our_partners {
     overflow: hidden;
@@ -1108,6 +1112,7 @@ h2.title {
 .our_partners ul li a:hover {
     background: none;
 }
+
 
 /*************************
 *******Shop CSS******
@@ -1173,6 +1178,7 @@ h2.title {
     color: #fff;
 }
 
+
 /*************************
 *******Product Details CSS******
 **************************/
@@ -1232,6 +1238,7 @@ h2.title {
     position: absolute;
     top: 35%;
 }
+
 .item-control i {
     background: #47a447;
     color: #ffffff;
@@ -1286,6 +1293,7 @@ h2.title {
     margin-right: 20px;
     margin-top: 0px;
 }
+
 .product-information span input {
     border: 1px solid #dededc;
     color: #696763;
@@ -1327,6 +1335,7 @@ h2.title {
     margin-right: 15px;
     padding-bottom: 10px;
 }
+
 .shop-details-tab .col-sm-12 {
     padding-left: 0;
     padding-right: 0;
@@ -1380,6 +1389,7 @@ h2.title {
     padding: 8px;
     width: 48%;
 }
+
 #reviews form span input:last-child {
     margin-left: 3%;
 }
@@ -1406,6 +1416,7 @@ h2.title {
     font-family: "Roboto", sans-serif;
     font-size: 14px;
 }
+
 
 /*************************
 *******404 CSS******
@@ -1445,6 +1456,7 @@ h2.title {
     padding: 8px 40px;
 }
 
+
 /*************************
 *******login page CSS******
 **************************/
@@ -1456,11 +1468,9 @@ h2.title {
     overflow: hidden;
 }
 
-.login-form {
-}
+.login-form {}
 
-.signup-form {
-}
+.signup-form {}
 
 .login-form h2,
 .signup-form h2 {
@@ -1513,8 +1523,7 @@ h2.title {
     padding: 6px 25px;
 }
 
-.login-form label {
-}
+.login-form label {}
 
 .login-form label input {
     border: medium none;
@@ -1537,6 +1546,7 @@ h2.title {
     text-align: center;
     width: 50px;
 }
+
 
 /*************************
 *******Cart CSS******
@@ -1562,7 +1572,7 @@ h2.title {
     padding: 3px 7px;
 }
 
-.breadcrumbs .breadcrumb > li + li:before {
+.breadcrumbs .breadcrumb>li+li:before {
     content: " ";
 }
 
@@ -1737,13 +1747,12 @@ h2.title {
     border: 1px solid#F0F0E9;
 }
 
-.user_info > li {
+.user_info>li {
     float: left;
     margin-right: 10px;
 }
 
-.user_info > li > span {
-}
+.user_info>li>span {}
 
 .user_info input,
 select,
@@ -1774,6 +1783,7 @@ textarea {
     border: none;
     padding: 6px 12px;
 }
+
 .update {
     margin-left: 40px;
 }
@@ -1781,6 +1791,7 @@ textarea {
 .check_out {
     margin-left: 10px;
 }
+
 
 /*************************
 *******checkout CSS******
@@ -1885,10 +1896,10 @@ textarea {
     width: 47%;
 }
 
-.shopper-info > form > input,
-.form-two > form > select,
-.form-two > form > input,
-.form-one > form > input {
+.shopper-info>form>input,
+.form-two>form>select,
+.form-two>form>input,
+.form-one>form>input {
     background: #f0f0e9;
     border: 0 none;
     margin-bottom: 10px;
@@ -1897,7 +1908,7 @@ textarea {
     font-weight: 300;
 }
 
-.form-two > form > select {
+.form-two>form>select {
     padding: 10px 5px;
 }
 
@@ -1960,6 +1971,7 @@ textarea {
     border-bottom: 1px solid #f7f7f0;
 }
 
+
 /*************************
 *******Blog CSS******
 **************************/
@@ -1973,8 +1985,7 @@ textarea {
     margin-bottom: 17px;
 }
 
-.single-blog-post > a {
-}
+.single-blog-post>a {}
 
 .blog-post-area .single-blog-post a img {
     border: 1px solid #f7f7f0;
@@ -2069,6 +2080,7 @@ textarea {
     color: #fff;
 }
 
+
 /*************************
 *******Blog Single CSS******
 **************************/
@@ -2137,6 +2149,7 @@ textarea {
 .rating-area .tag li {
     padding: 5px 2px;
 }
+
 .rating-area .tag li span {
     color: #363432;
 }
@@ -2355,6 +2368,7 @@ textarea {
     left: 5px;
 }
 
+
 /*************************
 ******* Contact CSS ********
 **************************/
@@ -2463,11 +2477,11 @@ span.text-alert {
     width: 100%;
     text-align: center;
     font-weight: bold;
-
     margin-top: -25px;
     display: inline-block;
     text-align: left;
 }
+
 .full-screen {
     background-size: cover;
     background-position: center;

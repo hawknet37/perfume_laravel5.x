@@ -15,25 +15,25 @@
         <!--category-tab-->
         <div class="col-sm-12">
             <ul class="nav nav-tabs">
-                @php
+                <?php
                 $i = 0;
-                @endphp
-                @foreach($cate_pro_tabs as $key => $cat_tab)
-                @php
+                $arrayTabs = $cate_pro_tabs->toArray();
+                $reversedTabs = array_reverse($arrayTabs);
+                ?>
+                @foreach($reversedTabs as $key => $cat_tab)
+                <?php
                 $i++;
-                @endphp
-                <li class="tabs_pro {{$i==1 ? 'active' : ''}}" data-id="{{$cat_tab->category_id}}">
-                    <a href="#tshirt" data-toggle="tab">{{$cat_tab->category_name}}</a>
+                ?>
+                <li class="tabs_pro {{$i==1 ? 'active' : ''}}" data-id="{{$cat_tab['category_id']}}">
+                    <a href="#tshirt" data-toggle="tab">{{$cat_tab['category_name']}}</a>
                 </li>
-
                 @endforeach
-
-
             </ul>
         </div>
-        <div id="tabs_product"></div>
-
+        <div id="tabs_product">
+        </div>
     </div>
+    
     <!--/category-tab-->
 
     <h2 class="title text-center" style="border-top: 1px solid;
@@ -91,8 +91,16 @@
 
 </div>
 <!--features_items-->
-<ul class="pagination pagination-sm m-t-none m-b-none">
-    {!!$all_product->links()!!}
+<ul class="pagination pagination-sm m-t-none m-b-none" id="pagination">
+    {!! $all_product->links() !!}
 </ul>
+<script>
+    // Lấy phân trang bằng ID
+    var pagination = document.getElementById('pagination');
+    
+    // Căn giữa phân trang bằng JavaScript
+    pagination.style.display = 'flex';
+    pagination.style.justifyContent = 'center';
+</script>
 <!--/recommended_items-->
 @endsection
