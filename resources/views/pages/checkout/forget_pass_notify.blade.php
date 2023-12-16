@@ -9,7 +9,7 @@
 </head>
 
 <body>
-  <p>Click vào {{$data['body']}} để reset password</p>
+  <p>Click vào <a href="{{ $data['body'] }}">{{ $data['body'] }}</a> để reset password</p>
 </body>
 
 </html>

@@ -78,9 +78,20 @@
         @endforeach
 </div>
 <!--features_items-->
-<ul class="pagination pagination-sm m-t-none m-b-none">
+{{-- <ul class="pagination pagination-sm m-t-none m-b-none">
+    {!!$brand_by_id->links()!!}
+</ul> --}}
+<ul class="pagination pagination-sm m-t-none m-b-none" id="pagination">
     {!!$brand_by_id->links()!!}
 </ul>
+<script>
+    // Lấy phân trang bằng ID
+    var pagination = document.getElementById('pagination');
+    
+    // Căn giữa phân trang bằng JavaScript
+    pagination.style.display = 'flex';
+    pagination.style.justifyContent = 'center';
+</script>
 
 <!--/recommended_items-->
 @endsection

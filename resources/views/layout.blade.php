@@ -587,69 +587,81 @@
     });
     </script>
 
-
     <script type="text/javascript">
         $(document).ready(function(){
-            
             $('.send_order').click(function(){
-                // e.preventDefault();
-                
-                swal({
-                    
-                  title: "Xác nhận đơn hàng",
-                  text: "Đơn hàng sẽ không được hoàn trả khi đặt, bạn có muốn đặt không?",
-                  type: "warning",
-                  showCancelButton: true,
-                
-                  confirmButtonClass: "btn-danger",
-                  confirmButtonText: "Cảm ơn, Mua hàng",
-                  required: 'true',
-                  
-
-                cancelButtonText: "Đóng, kiểm tra lại thông tin",
-                closeOnConfirm: false,
-                closeOnCancel: false
-                },
-                function(isConfirm){
-                    
-                     if (isConfirm) {
-
-                        var shipping_email = $('.shipping_email').val();
-                        var shipping_name = $('.shipping_name').val();
-                        var shipping_address = $('.shipping_address').val();
-                        var shipping_phone = $('.shipping_phone').val();
-                        var shipping_notes = $('.shipping_notes').val();
-                        var shipping_method = $('.payment_select').val();
-                        var order_fee = $('.order_fee').val();
-                        var order_coupon = $('.order_coupon').val();
-                        var _token = $('input[name="_token"]').val();
-
-                        $.ajax({
-                            url: '{{url('/confirm-order')}}',
-                            method: 'POST',
-                            data:{shipping_email:shipping_email,shipping_name:shipping_name,shipping_address:shipping_address,shipping_phone:shipping_phone,shipping_notes:shipping_notes,_token:_token,order_fee:order_fee,order_coupon:order_coupon,shipping_method:shipping_method},
-                            success:function(){
-                               swal("Đơn hàng", "Đơn hàng của bạn đã được gửi thành công", "success");
-                            }
-                        });
-
-                        window.setTimeout(function(){ 
-                            window.location.href = "{{url('/history')}}";
-                        } ,3000);
-
-                      } else {
-                        swal("Đóng", "Đơn hàng chưa được gửi, làm ơn hoàn tất đơn hàng", "error");
-
-                      }
-              
-                });
-
-               
+                var matp = $('#city').val();
+                var maqh = $('#province').val();
+                var xaid = $('#wards').val();
+                var _token = $('input[name="_token"]').val();
+    
+                if (matp && maqh && xaid) {
+                    $.ajax({
+                        url: '{{ url('/calculate-fee') }}',
+                        method: 'POST',
+                        data: { matp: matp, maqh: maqh, xaid: xaid, _token: _token },
+                        success: function(){
+                            // Sau khi tính phí vận chuyển thành công, thực hiện xác nhận đơn hàng
+                            swal({
+                                title: "Xác nhận đơn hàng",
+                                text: "Đơn hàng sẽ không được hoàn trả khi đặt, bạn có muốn đặt không?",
+                                type: "warning",
+                                showCancelButton: true,
+                                confirmButtonClass: "btn-danger",
+                                confirmButtonText: "Cảm ơn, Mua hàng",
+                                required: 'true',
+                                cancelButtonText: "Đóng, kiểm tra lại thông tin",
+                                closeOnConfirm: false,
+                                closeOnCancel: false
+                            },
+                            function(isConfirm){
+                                if (isConfirm) {
+                                    // Lấy các giá trị của đơn hàng
+                                    var shipping_email = $('.shipping_email').val();
+                                    var shipping_name = $('.shipping_name').val();
+                                    var shipping_address = $('.shipping_address').val();
+                                    var shipping_phone = $('.shipping_phone').val();
+                                    var shipping_notes = $('.shipping_notes').val();
+                                    var shipping_method = $('.payment_select').val();
+                                    var order_fee = $('.order_fee').val();
+                                    var order_coupon = $('.order_coupon').val();
+    
+                                    $.ajax({
+                                        url: '{{url('/confirm-order')}}',
+                                        method: 'POST',
+                                        data: {
+                                            shipping_email: shipping_email,
+                                            shipping_name: shipping_name,
+                                            shipping_address: shipping_address,
+                                            shipping_phone: shipping_phone,
+                                            shipping_notes: shipping_notes,
+                                            _token: _token,
+                                            order_fee: order_fee,
+                                            order_coupon: order_coupon,
+                                            shipping_method: shipping_method
+                                        },
+                                        success: function(){
+                                            swal("Đơn hàng", "Đơn hàng của bạn đã được gửi thành công", "success");
+                                        }
+                                    });
+    
+                                    window.setTimeout(function(){ 
+                                        window.location.href = "{{url('/history')}}";
+                                    } ,3000);
+    
+                                } else {
+                                    swal("Đóng", "Đơn hàng chưa được gửi, làm ơn hoàn tất đơn hàng", "error");
+                                }
+                            });
+                        }
+                    });
+                } else {
+                    alert('Làm ơn chọn đầy đủ thông tin để tính phí vận chuyển');
+                }
             });
         });
-    
-
     </script>
+    
     <script src="sweetalert2.min.js"></script>
     <link rel="stylesheet" href="sweetalert2.min.css">
     <script type="text/javascript">

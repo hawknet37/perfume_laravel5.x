@@ -258,7 +258,10 @@
 								<option value="">--Chọn xã phường--</option>
 							</select>
 						</div>
-
+						<?php
+							$fee = Session::get('fee');
+							echo number_format($fee, 0, ',', '.');
+						?>
 						<input type="text" name="shipping_address" class="shipping_address" required placeholder="Địa chỉ gửi hàng">
 						<input type="text" name="shipping_phone" class="shipping_phone" required placeholder="Số điện thoại">
 						<textarea name="shipping_notes" class="shipping_notes" required placeholder="Ghi chú đơn hàng của bạn"

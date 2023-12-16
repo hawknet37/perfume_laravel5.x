@@ -57,8 +57,8 @@ class CheckoutController extends Controller
             $orderInfo = "Thanh toán qua ATM MoMo";
             $amount = $_POST['total_momo'];
             $orderId = time() . "";
-            $redirectUrl = "http://mihawkperfume.com/shopperfume_laravel1/checkout";
-            $ipnUrl = "http://mihawkperfume.com/shopperfume_laravel1/checkout";
+            $redirectUrl = "http://mihawkperfume.com/shopperfume_laravel/checkout";
+            $ipnUrl = "http://mihawkperfume.com/shopperfume_laravel/checkout";
             $extraData = "";
 
 
@@ -103,7 +103,7 @@ class CheckoutController extends Controller
             $data= $request->all();
             $code_cart = rand(00,9999);
             $vnp_Url = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
-            $vnp_Returnurl = "http://mihawkperfume.com/shopperfume_laravel1/checkout";
+            $vnp_Returnurl = "http://mihawkperfume.com/shopperfume_laravel/checkout";
             $vnp_TmnCode = "F4VQH422";//Mã website tại VNPAY 
             $vnp_HashSecret = "ULJKAOXFABVGKVOGUHMYSEVSXQUDOSZG"; //Chuỗi bí mật
 
