@@ -589,75 +589,149 @@
 
     <script type="text/javascript">
         $(document).ready(function(){
-            $('.send_order').click(function(){
+            $('.calculate_delivery').click(function(){
+                var matp = $('.city').val();
+                var maqh = $('.province').val();
+                var xaid = $('.wards').val();
+                var _token = $('input[name="_token"]').val();
+                if(matp == '' && maqh =='' && xaid ==''){
+                    alert('Làm ơn chọn để tính phí vận chuyển');
+                }else{
+                    $.ajax({
+                    url : '{{url('/calculate-fee')}}',
+                    method: 'POST',
+                    data:{matp:matp,maqh:maqh,xaid:xaid,_token:_token},
+                    success:function(){
+                    location.reload(); 
+                    }
+                    });
+                } 
+        });
+    });
+    //     
+    </script>
+    {{-- <script type="text/javascript">
+        $(document).ready(function(){
+            // Tạo một hàm để kiểm tra xem tất cả các select đã được chọn hay chưa
+            function checkAllSelected() {
                 var matp = $('#city').val();
                 var maqh = $('#province').val();
                 var xaid = $('#wards').val();
                 var _token = $('input[name="_token"]').val();
     
-                if (matp && maqh && xaid) {
+                // Kiểm tra xem tất cả các select đã được chọn chưa
+                if (matp !== '' && maqh !== '' && xaid !== '') {
                     $.ajax({
                         url: '{{ url('/calculate-fee') }}',
                         method: 'POST',
                         data: { matp: matp, maqh: maqh, xaid: xaid, _token: _token },
                         success: function(){
-                            // Sau khi tính phí vận chuyển thành công, thực hiện xác nhận đơn hàng
-                            swal({
-                                title: "Xác nhận đơn hàng",
-                                text: "Đơn hàng sẽ không được hoàn trả khi đặt, bạn có muốn đặt không?",
-                                type: "warning",
-                                showCancelButton: true,
-                                confirmButtonClass: "btn-danger",
-                                confirmButtonText: "Cảm ơn, Mua hàng",
-                                required: 'true',
-                                cancelButtonText: "Đóng, kiểm tra lại thông tin",
-                                closeOnConfirm: false,
-                                closeOnCancel: false
-                            },
-                            function(isConfirm){
-                                if (isConfirm) {
-                                    // Lấy các giá trị của đơn hàng
-                                    var shipping_email = $('.shipping_email').val();
-                                    var shipping_name = $('.shipping_name').val();
-                                    var shipping_address = $('.shipping_address').val();
-                                    var shipping_phone = $('.shipping_phone').val();
-                                    var shipping_notes = $('.shipping_notes').val();
-                                    var shipping_method = $('.payment_select').val();
-                                    var order_fee = $('.order_fee').val();
-                                    var order_coupon = $('.order_coupon').val();
-    
-                                    $.ajax({
-                                        url: '{{url('/confirm-order')}}',
-                                        method: 'POST',
-                                        data: {
-                                            shipping_email: shipping_email,
-                                            shipping_name: shipping_name,
-                                            shipping_address: shipping_address,
-                                            shipping_phone: shipping_phone,
-                                            shipping_notes: shipping_notes,
-                                            _token: _token,
-                                            order_fee: order_fee,
-                                            order_coupon: order_coupon,
-                                            shipping_method: shipping_method
-                                        },
-                                        success: function(){
-                                            swal("Đơn hàng", "Đơn hàng của bạn đã được gửi thành công", "success");
-                                        }
-                                    });
-    
-                                    window.setTimeout(function(){ 
-                                        window.location.href = "{{url('/history')}}";
-                                    } ,3000);
-    
-                                } else {
-                                    swal("Đóng", "Đơn hàng chưa được gửi, làm ơn hoàn tất đơn hàng", "error");
-                                }
-                            });
+                            // Xử lý khi tính phí vận chuyển thành công
+                            location.reload(); // Hoặc thực hiện các hành động khác khi thành công
                         }
                     });
-                } else {
-                    alert('Làm ơn chọn đầy đủ thông tin để tính phí vận chuyển');
                 }
+            }
+    
+            // Sử dụng sự kiện 'change' cho các select để gọi hàm kiểm tra khi chúng thay đổi
+            $('#city, #province, #wards').change(function(){
+                checkAllSelected(); // Gọi hàm kiểm tra khi có sự thay đổi trong bất kỳ select nào
+            });
+    
+            // Gọi hàm kiểm tra khi trang được tải (để xác định trạng thái ban đầu của các select)
+            checkAllSelected();
+        });
+    </script> --}}
+
+    <script type="text/javascript">
+    
+        $(document).ready(function(){
+            function updateCombinedAddress() {
+                var city = $('#city option:selected').text();
+                var province = $('#province option:selected').text();
+                var wards = $('#wards option:selected').text();
+                var combinedAddress = wards + ' - ' + province + ' - ' + city;
+
+                $('#combined_address').val(combinedAddress);
+                localStorage.setItem('savedCombinedAddress', combinedAddress);
+            }
+            function calculateShippingFee() {
+                var matp = $('#city').val();
+                var maqh = $('#province').val();
+                var xaid = $('#wards').val();
+                var _token = $('input[name="_token"]').val();
+
+                if (matp !== '' && maqh !== '' && xaid !== '') {
+                    $.ajax({
+                        url: '{{ url('/calculate-fee') }}',
+                        method: 'POST',
+                        data: { matp: matp, maqh: maqh, xaid: xaid, _token: _token },
+                        success: function(response){
+                            location.reload();
+                        }
+                    });
+                }
+            }
+            
+            // Sự kiện change cho các select
+            $('#city, #province, #wards').change(function(){
+                updateCombinedAddress();
+                calculateShippingFee(); // Gọi hàm tính phí vận chuyển khi có sự thay đổi trong bất kỳ select nào
+            });
+            var savedCombinedAddress = localStorage.getItem('savedCombinedAddress');
+            if (savedCombinedAddress) {
+                $('#combined_address').val(savedCombinedAddress);
+            }
+
+            $('.send_order').click(function(){
+                // e.preventDefault();
+                
+                swal({                
+                  title: "Xác nhận đơn hàng",
+                  text: "Đơn hàng sẽ không được hoàn trả khi đặt, bạn có muốn đặt không?",
+                  type: "warning",
+                  showCancelButton: true,
+                
+                  confirmButtonClass: "btn-danger",
+                  confirmButtonText: "Cảm ơn, Mua hàng",
+                  required: 'true',
+                  
+
+                cancelButtonText: "Đóng, kiểm tra lại thông tin",
+                closeOnConfirm: false,
+                closeOnCancel: false
+                },
+                function(isConfirm){
+                    
+                     if (isConfirm) {
+
+                        var shipping_email = $('.shipping_email').val();
+                        var shipping_name = $('.shipping_name').val();
+                        var shipping_address = $('.shipping_address').val();
+                        var shipping_phone = $('.shipping_phone').val();
+                        var shipping_notes = $('.shipping_notes').val();
+                        var shipping_method = $('.payment_select').val();
+                        var order_fee = $('.order_fee').val();
+                        var order_coupon = $('.order_coupon').val();
+                        var _token = $('input[name="_token"]').val();
+
+                        $.ajax({
+                            url: '{{url('/confirm-order')}}',
+                            method: 'POST',
+                            data:{shipping_email:shipping_email,shipping_name:shipping_name,shipping_address:shipping_address,shipping_phone:shipping_phone,shipping_notes:shipping_notes,_token:_token,order_fee:order_fee,order_coupon:order_coupon,shipping_method:shipping_method},
+                            success:function(){
+                               swal("Đơn hàng", "Đơn hàng của bạn đã được gửi thành công", "success");
+                            }
+                        });
+
+                        window.setTimeout(function(){ 
+                            window.location.href = "{{url('/history')}}";
+                        } ,3000);
+
+                      } else {
+                        swal("Đóng", "Đơn hàng chưa được gửi, làm ơn hoàn tất đơn hàng", "error");
+                      }     
+                });            
             });
         });
     </script>

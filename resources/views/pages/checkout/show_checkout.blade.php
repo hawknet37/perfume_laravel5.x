@@ -147,10 +147,10 @@
 								@endif
 
 								@if(Session::get('fee'))
-								<li hidden>
+								<li >
 
 
-									Phí vận chuyển: <span>{{number_format(Session::get('fee'),0,',','.')}}đ</span>
+									Phí ship:  <span>{{number_format(Session::get('fee'),0,',','.')}}đ</span>
 									<a class="cart_quantity_delete" href="{{url('/del-fee')}}"><i class="fa fa-times"></i></a>
 
 								</li>
@@ -230,12 +230,12 @@
 					</div>
 					<h3>Điền thông tin gửi hàng</h3>
 
-					<form method="POST">
+					<form id="orderForm" method="POST">
 						@csrf
 						<input type="text" name="shipping_email" class="shipping_email" required placeholder="Điền email">
 						<input type="text" name="shipping_name" class="shipping_name" required placeholder="Họ và tên người gửi">
 						<div class="form-group">
-							<label for="exampleInputPassword1">Chọn thành phố</label>
+							<label for="city">Chọn thành phố</label>
 							<select name="city" id="city" class="form-control input-sm m-bot15 choose city">
 
 								<option value="">--Chọn tỉnh thành phố--</option>
@@ -246,23 +246,21 @@
 							</select>
 						</div>
 						<div class="form-group">
-							<label for="exampleInputPassword1">Chọn quận huyện</label>
+							<label for="province">Chọn quận huyện</label>
 							<select name="province" id="province" class="form-control input-sm m-bot15 province choose">
 								<option value="">--Chọn quận huyện--</option>
 
 							</select>
 						</div>
 						<div class="form-group">
-							<label for="exampleInputPassword1">Chọn xã phường</label>
+							<label for="wards">Chọn xã phường</label>
 							<select name="wards" id="wards" class="form-control input-sm m-bot15 wards">
 								<option value="">--Chọn xã phường--</option>
 							</select>
 						</div>
-						<?php
-							$fee = Session::get('fee');
-							echo number_format($fee, 0, ',', '.');
-						?>
-						<input type="text" name="shipping_address" class="shipping_address" required placeholder="Địa chỉ gửi hàng">
+						
+						<input type="text" name="shipping_address" class="shipping_address" required placeholder="Địa chỉ gửi hàng (số nhà)">
+						<input type="text" name="combined_address" id="combined_address" readonly>
 						<input type="text" name="shipping_phone" class="shipping_phone" required placeholder="Số điện thoại">
 						<textarea name="shipping_notes" class="shipping_notes" required placeholder="Ghi chú đơn hàng của bạn"
 							rows="5"></textarea>
@@ -293,9 +291,9 @@
 								<option value="momo">Đã thanh toán bằng MOMO</option>
 							</select>
 							@else
-							<select name="payment_select" class="form-control input-sm m-bot15 payment_select">	
-								<option value="chuyenkhoan">Qua chuyển khoản</option>						
-								<option value="tienmat">Tiền mặt</option>								
+							<select name="payment_select" class="form-control input-sm m-bot15 payment_select">
+								<option value="chuyenkhoan">Qua chuyển khoản</option>
+								<option value="tienmat">Tiền mặt</option>
 							</select>
 							@endif
 						</div>
