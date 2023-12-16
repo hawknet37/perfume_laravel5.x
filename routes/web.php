@@ -177,7 +177,7 @@ Route::get('/active-slide/{slide_id}','SliderController@active_slide');
 Route::post('/momo-payment','CheckoutController@momo_payment');
 
 // Auth roles
-// Route::get('/register-auth','AuthController@register_auth');
+Route::get('/register-auth','AuthController@register_auth');
 Route::get('/login-auth','AuthController@login_auth');
 Route::get('/logout-auth','AuthController@logout_auth');
 Route::post('/register','AuthController@register');

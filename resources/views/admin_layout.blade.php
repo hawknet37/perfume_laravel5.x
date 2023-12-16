@@ -177,13 +177,7 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
                   <i class="fa fa-spray-can"></i>
                   <span>Quản lý nhập hàng</span>
                 </a>
-              </li>
-              <li class="treeview" hidden>
-                <a href="{{url('/information')}}">
-                  <i class="fa fa-dashboard"></i> <span>Thông tin website</span>
-                </a>
-              </li>
-              
+              </li>   
               <li class="treeview ">
                 <a href="{{URL::to('/all-brand-product')}}">
                   <i class="fa fa-spray-can"></i>
@@ -230,7 +224,10 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
                 </a>
               </li>
               @endhasrole
-
+              <li class="treeview">
+                <a href="{{url('/information')}}">
+                  <i class="fa fa-spray-can"></i> <span>Quản lý thông tin website</span>
+                </a>
               </li>
             </ul>
           </div>

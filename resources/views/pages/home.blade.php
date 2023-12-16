@@ -10,34 +10,11 @@
 @section('content')
 <div class="features_items">
     <!--features_items-->
-
-    <div class="category-tab">
-        <!--category-tab-->
-        <div class="col-sm-12">
-            <ul class="nav nav-tabs">
-                <?php
-                $i = 0;
-                $arrayTabs = $cate_pro_tabs->toArray();
-                $reversedTabs = array_reverse($arrayTabs);
-                ?>
-                @foreach($reversedTabs as $key => $cat_tab)
-                <?php
-                $i++;
-                ?>
-                <li class="tabs_pro {{$i==1 ? 'active' : ''}}" data-id="{{$cat_tab['category_id']}}">
-                    <a href="#tshirt" data-toggle="tab">{{$cat_tab['category_name']}}</a>
-                </li>
-                @endforeach
-            </ul>
-        </div>
-        <div id="tabs_product">
-        </div>
-    </div>
     
     <!--/category-tab-->
 
     <h2 class="title text-center" style="border-top: 1px solid;
-    padding-top: 10px;">Sản phẩm mới nhất</h2>
+    padding-top: 10px;">Sản phẩm nước hoa</h2>
 
     @foreach($all_product as $key => $product)
 
