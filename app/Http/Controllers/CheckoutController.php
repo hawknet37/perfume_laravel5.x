@@ -309,7 +309,7 @@ class CheckoutController extends Controller
                         Session::save();
                     }
                 }else{ 
-                    Session::put('fee',50000);
+                    Session::put('fee',25000);
                     Session::save();
                 }
             }
