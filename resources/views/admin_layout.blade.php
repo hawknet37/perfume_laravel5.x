@@ -204,7 +204,7 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
                   <span>Quản lý slider</span>
                 </a>
               </li>
-
+            
               {{-- @impersonate
               <li class="treeview ">
                 <a href="{{URL::to('/impersonate-destroy')}}">
@@ -215,7 +215,7 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
               </li>
               @endimpersonate --}}
 
-              @hasrole(['admin','author'])
+              @hasrole(['admin'])
               
               <li class="treeview ">
                 <a href="{{URL::to('/users')}}">
@@ -223,12 +223,20 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
                   <span>Quản lý users</span>
                 </a>
               </li>
-              @endhasrole
+              
               <li class="treeview">
                 <a href="{{url('/information')}}">
                   <i class="fa fa-spray-can"></i> <span>Quản lý thông tin website</span>
                 </a>
               </li>
+              @endhasrole
+              <li class="treeview ">
+                <a href="{{route('customer.index')}}">
+                  <i class="fa fa-users"></i>
+                  <span>Quản lý Khách hàng</span>
+                </a>
+              </li>
+              
             </ul>
           </div>
           <!-- /.navbar-collapse -->
@@ -278,10 +286,6 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
                     @hasrole(['author'])
                     <span>
                       Author</span>
-                    @endhasrole
-                    @hasrole(['user'])
-                    <span>
-                      User</span>
                     @endhasrole
                   </div>
                   <i class="fa fa-angle-down lnr"></i>

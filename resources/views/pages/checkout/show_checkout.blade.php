@@ -234,33 +234,9 @@
 						@csrf
 						<input type="text" name="shipping_email" class="shipping_email" required placeholder="Điền email">
 						<input type="text" name="shipping_name" class="shipping_name" required placeholder="Họ và tên người gửi">
-						<div class="form-group">
-							<label for="city">Chọn thành phố</label>
-							<select name="city" id="city" class="form-control input-sm m-bot15 choose city">
-
-								<option value="">--Chọn tỉnh thành phố--</option>
-								@foreach($city as $key => $ci)
-								<option value="{{$ci->matp}}">{{$ci->name_city}}</option>
-								@endforeach
-
-							</select>
-						</div>
-						<div class="form-group">
-							<label for="province">Chọn quận huyện</label>
-							<select name="province" id="province" class="form-control input-sm m-bot15 province choose">
-								<option value="">--Chọn quận huyện--</option>
-
-							</select>
-						</div>
-						<div class="form-group">
-							<label for="wards">Chọn xã phường</label>
-							<select name="wards" id="wards" class="form-control input-sm m-bot15 wards">
-								<option value="">--Chọn xã phường--</option>
-							</select>
-						</div>
+						
 						
 						<input type="text" name="shipping_address" class="shipping_address" required placeholder="Địa chỉ gửi hàng (số nhà)">
-						<input type="text" name="combined_address" id="combined_address" readonly>
 						<input type="text" name="shipping_phone" class="shipping_phone" required placeholder="Số điện thoại">
 						<textarea name="shipping_notes" class="shipping_notes" required placeholder="Ghi chú đơn hàng của bạn"
 							rows="5"></textarea>
@@ -278,9 +254,6 @@
 						@else
 						<input type="hidden" name="order_coupon" class="order_coupon" value="no">
 						@endif
-
-
-
 
 						<div class="form-group">
 							<br>
@@ -316,6 +289,50 @@
 
 
 				</div>
+				@endif
+
+				@if(Session::get('cart')==true)
+				@if(!Session::get('success_paypal')==true)
+				@if(!Session::get('success_momo')==true)
+				<div class="col-sm-6" style="margin-top: 50px;
+				margin-left: 27px;">
+
+					<form>
+						@csrf
+
+						<div class="form-group">
+							<label for="exampleInputPassword1">Chọn thành phố</label>
+							<select name="city" id="city" class="form-control input-sm m-bot15 choose city">
+
+								<option value="">--Chọn tỉnh thành phố--</option>
+								@foreach($city as $key => $ci)
+								<option value="{{$ci->matp}}">{{$ci->name_city}}</option>
+								@endforeach
+
+							</select>
+						</div>
+						<div class="form-group">
+							<label for="exampleInputPassword1">Chọn quận huyện</label>
+							<select name="province" id="province" class="form-control input-sm m-bot15 province choose">
+								<option value="">--Chọn quận huyện--</option>
+
+							</select>
+						</div>
+						<div class="form-group">
+							<label for="exampleInputPassword1">Chọn xã phường</label>
+							<select name="wards" id="wards" class="form-control input-sm m-bot15 wards">
+								<option value="">--Chọn xã phường--</option>
+							</select>
+						</div>
+
+
+						<input type="button" value="Tính phí vận chuyển" name="calculate_order"
+							class="btn btn-primary btn-sm calculate_delivery">
+
+					</form>
+				</div>
+				@endif
+				@endif
 				@endif
 				<br>
 				<br>

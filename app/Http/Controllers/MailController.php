@@ -133,6 +133,9 @@ class MailController extends Controller
        
        
     }
+    public function test_mail(){
+        
+    }
     public function mail_example(){
         return view('pages.send_mail');
     }

@@ -10,6 +10,8 @@ use App\Http\Requests;
 use Illuminate\Support\Facades\Redirect;
 use App\Product;
 use App\Gallery;
+use App\Comment;
+use App\Rating;
 use Auth;
 use App\Contact;
 use File;
@@ -23,7 +25,7 @@ class ProductController extends Controller
         if($admin_id){
             return Redirect::to('dashboard');
         }else{
-            return Redirect::to('admin')->send();
+            return Redirect::to('login-auth')->send();
         }
     }
     public function add_product(){
@@ -329,5 +331,44 @@ class ProductController extends Controller
             return view('admin_layout')->with('admin.product.view_export', $manager_product);
     
     }
-    
+    // Đánh giá
+    public function load_comment(Request $request){
+        $product_id = $request->product_id;
+        $comment = Comment::where('comment_product_id',$product_id)->get();
+        $output = '';
+        foreach($comment as $key => $comm){
+            $output.= '<div class="row style_comment">
+            <div class="col-md-2"> 
+                
+                <img width="100%" src="'.url('/public/frontend/images/usericon.png').'" class="img img-responsive img-thumbnail" alt="">
+            </div>
+            <div class="col-md-10">
+                <p style="color:green;">@'.$comm->comment_name.'</p>
+                <p style="color:#000;">'.$comm->comment_date.'</p>
+                <p>'.$comm->comment.'</p>
+            </div>
+        </div><p></p>';   
+        }
+        echo $output;
+    }
+
+    public function send_comment(Request $request){
+        $product_id = $request->product_id;
+        $comment_name = $request->comment_name;
+        $comment_content = $request->comment_content;
+        $comment = new Comment();
+        $comment->comment = $comment_content;
+        $comment->comment_name = $comment_name;
+        $comment->comment_product_id = $product_id;
+        $comment->save();
+    }
+
+    public function insert_rating(Request $request){
+        $data = $request->all();
+        $rating = new Rating();
+        $rating->product_id = $data['product_id'];
+        $rating->rating = $data['index'];
+        $rating->save();
+        echo 'done';
+    }
 }

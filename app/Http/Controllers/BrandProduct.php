@@ -21,7 +21,7 @@ class BrandProduct extends Controller
         if($admin_id){
             return Redirect::to('dashboard');
         }else{
-            return Redirect::to('admin')->send();
+            return Redirect::to('login-auth')->send();
         }
     }
     public function add_brand_product(){
@@ -69,14 +69,6 @@ class BrandProduct extends Controller
         $brand->brand_status = $data['brand_product_status'];
         $brand->save();
        
-    	// $data = array();
-    	// $data['brand_name'] = $request->brand_product_name;
-        // $data['brand_slug'] = $request->brand_slug;
-    	// $data['brand_desc'] = $request->brand_product_desc;
-    	// $data['brand_status'] = $request->brand_product_status;
-    	// DB::table('tbl_brand')->insert($data);
-        
-    	// Session::put('message','Thêm thương hiệu sản phẩm thành công');
         Toastr::success('Thêm thương hiệu sản phẩm thành công','Thành công');
 
     	return Redirect::to('all-brand-product');
@@ -123,12 +115,7 @@ class BrandProduct extends Controller
         $brand->brand_desc = $data['brand_product_desc'];
         $brand->brand_status = $data['brand_product_status'];
         $brand->save();
-        // $data = array();
-        // $data['brand_name'] = $request->brand_product_name;
-        // $data['brand_slug'] = $request->brand_slug;
-        // $data['brand_desc'] = $request->brand_product_desc;
-        // DB::table('tbl_brand')->where('brand_id',$brand_product_id)->update($data);
-        // Session::put('message','Cập nhật thương hiệu sản phẩm thành công');
+        
         Toastr::success('Cập nhật thương hiệu sản phẩm thành công','Thành công');
 
         return Redirect::to('all-brand-product');

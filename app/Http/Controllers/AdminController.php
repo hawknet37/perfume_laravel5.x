@@ -84,21 +84,20 @@ class AdminController extends Controller
         }
 
     public function callback_customer_google(){
-    config(['services.google.redirect' => env('GOOGLE_CLIENT_URL')]);
-    $users = Socialite::driver('google')->stateless()->user(); 
+            config(['services.google.redirect' => env('GOOGLE_CLIENT_URL')]);
+            $users = Socialite::driver('google')->stateless()->user(); 
             $authUser = $this->findOrCreateCustomer($users,'google');
            if($authUser)
            {
-            $account_name = Customer::where('customer_id',$authUser->user)->first();
-            Session::put('customer_id',$account_name->customer_id);
-            Session::put('customer_picture',$account_name->customer_picture);
-            Session::put('customer_name',$account_name->customer_name);
-
+                $account_name = Customer::where('customer_id',$authUser->user)->first();
+                Session::put('customer_id',$account_name->customer_id);
+                Session::put('customer_picture',$account_name->customer_picture);
+                Session::put('customer_name',$account_name->customer_name);
            }elseif($customer_new){
-            $account_name = Customer::where('customer_id',$authUser->user)->first();
-            Session::put('customer_id',$account_name->customer_id);
-            Session::put('customer_picture',$account_name->customer_picture);
-            Session::put('customer_name',$account_name->customer_name);
+                $account_name = Customer::where('customer_id',$authUser->user)->first();
+                Session::put('customer_id',$account_name->customer_id);
+                Session::put('customer_picture',$account_name->customer_picture);
+                Session::put('customer_name',$account_name->customer_name);
            }
            Toastr::success('Đăng nhập bằng tài khoản Google thành công','Thành công');
 
@@ -113,12 +112,12 @@ class AdminController extends Controller
             }
             else{
                 $customer_new = new SocialCustomers([
-                'provider_user_id' => $users->id,
-                'provider_user_email' => $users->email,
-                'provider' => strtoupper($provider)
-            ]);
+                    'provider_user_id' => $users->id,
+                    'provider_user_email' => $users->email,
+                    'provider' => strtoupper($provider)
+                ]);
 
-            $customer = Customer::where('customer_email',$users->email)->first();
+                $customer = Customer::where('customer_email',$users->email)->first();
 
                 if(!$customer){
                     $customer = Customer::create([
@@ -127,14 +126,14 @@ class AdminController extends Controller
                         'customer_picture' => '',
                         'customer_password' => '',
                         'customer_phone' => 123456
-                        
+                            
                     ]);
                 }
 
-            $customer_new->customer()->associate($customer);
-                
-            $customer_new->save();
-            return $customer_new;
+                $customer_new->customer()->associate($customer);
+                    
+                $customer_new->save();
+                return $customer_new;
             } 
     }
 
@@ -197,25 +196,24 @@ class AdminController extends Controller
 
         }
 
-        public function filter_by_date(Request $request){
-            $data = $request->all();
-            $from_date = $data['from_date'];
-            $to_date = $data['to_date'];
+    public function filter_by_date(Request $request){
+        $data = $request->all();
+        $from_date = $data['from_date'];
+        $to_date = $data['to_date'];
 
-            $get= Statistic::whereBetween('order_date',[$from_date,$to_date])->orderBy('order_date','ASC')->get();
-            foreach ($get as $key => $val) {
-                $chart_data[] = array(
-                    'period' => $val->order_date,
-                    'order' =>$val->total_order,
-                    'sales' =>$val->sales,
-                    'profit' =>$val->profit,
-                    'quantity' =>$val->quantity
-                );
-            }
-
-            echo $data = json_encode($chart_data);
-
+        $get= Statistic::whereBetween('order_date',[$from_date,$to_date])->orderBy('order_date','ASC')->get();
+        foreach ($get as $key => $val) {
+            $chart_data[] = array(
+                'period' => $val->order_date,
+                'order' =>$val->total_order,
+                'sales' =>$val->sales,
+                'profit' =>$val->profit,
+                'quantity' =>$val->quantity
+            );
         }
+
+        echo $data = json_encode($chart_data);
+    }
         
     public function AuthLogin(){
         if(Session::get('login_normal')){
@@ -301,7 +299,6 @@ class AdminController extends Controller
             //validation laravel 
             'admin_email' => 'required',
             'admin_password' => 'required',
-            'g-recaptcha-response' => new Captcha(),    //dòng kiểm tra Captcha
         ]);
 
         $admin_email = $data['admin_email'];

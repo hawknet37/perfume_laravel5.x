@@ -9,7 +9,7 @@
 <body>
 	<div class="coupon">
 		<div class="container">
-			<h3>Mã khuyến mãi từ Shop <a target="_blank" href="http://mihawkperfume.com/shopperfume_laravel1/">Mihawk Perfume
+			<h3>Mã khuyến mãi từ Shop <a target="_blank" href="http://mihawkperfume.com/shopperfume_laravel/">Mihawk Perfume
 				</a></h3>
 
 		</div>

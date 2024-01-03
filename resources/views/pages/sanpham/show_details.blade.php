@@ -65,7 +65,7 @@
 			</p>
 			<p><b>Số lượng kho còn:</b> <span>{{$value->product_quantity}}</span></p>
 			<p><b>Thương hiệu: </b><span style="text-transform: uppercase">{{ $value->brand_name}}</span></p>
-			<p><b>Danh mục:</b> <span>{{$value->category_name}}</span></p>
+			<p><b>Loại sản phẩm:</b> <span>{{$value->category_name}}</span></p>
 			<a href=""><img src="images/product-details/share.png" class="share img-responsive" alt="" /></a>
 			<div id="fb-root"></div>
 			<script async defer crossorigin="anonymous" src="https://connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v18.0&appId=742835417390444" nonce="eNJ3f8jw"></script>
@@ -87,7 +87,7 @@
 			<li class="active"><a href="#binhluan" data-toggle="tab">Bình luận</a></li>
 			<li ><a href="#details" data-toggle="tab">Mô tả</a></li>
 			<li><a href="#companyprofile" data-toggle="tab">Chi tiết sản phẩm</a></li>
-			
+			<li><a href="#reviews" data-toggle="tab">Đánh giá</a></li>
 		</ul>
 	</div>
 	<div class="tab-content">
@@ -104,8 +104,65 @@
 
 		<div class="tab-pane fade" id="companyprofile">
 			<p>{!!$value->product_content!!}</p>
+		</div>
 
-
+		{{-- Đánh giá --}}
+		<div class="tab-pane fade" id="reviews">
+			<div class="col-sm-12">
+				<style type="text/css">
+					row.style_comment{
+						border: 1px solid #ddd;
+						border-radius: 10px;
+						background: #F0F0E9;
+					}
+				</style>
+				<form action="">
+					@csrf
+					<input type="hidden" name="comment_product_id" class="comment_product_id" value="{{$value->product_id}}">
+					<div id="comment_show"></div>		
+				</form>
+				
+				<p><b>Viết đánh giá của bạn</b></p>	
+				<form action="#">
+					<span>
+						<input style="width:100%; margin-left: 0; " type="text" class="comment_name" placeholder="Tên của bạn cần đánh giá:" />
+					</span>
+					<textarea name="comment" class="comment_content" placeholder="Nội dung đánh giá"></textarea>
+					<div id="notify_comment"></div>
+					<b style="display: inline-block; vertical-align: middle; margin-top: -10px;">Đánh giá sao: </b>
+					<img src="images/product-details/rating.png" alt="" style="display: inline-block; vertical-align: middle; margin-right: 5px;">
+					@php
+						$rating = $value->rating ?? 0; 
+					@endphp
+					<ul class="list-inline rating" title="Average Rating" style="display: inline; list-style: none; padding: 0; margin: 0;">
+					@for($count=1; $count<=5; $count++)
+						@php
+						if($count <= $rating){
+							$color = 'color:#ffcc00;';
+						}
+						else{
+							$color = 'color:#ccc;';
+						}
+						@endphp
+						
+						<li
+						title="Đánh giá sao"
+						id="{{$value->product_id}}-{{$count}}"
+						data-index="{{$count}}"
+						data-product_id="{{$value->product_id}}"
+						data-rating="{{$rating}}"
+						class="rating"
+						style="cursor:pointer; {{$color}} font-size:30px; display: inline-block;"
+						>
+						&#9733
+						</li>
+					@endfor
+					</ul>
+					<button type="button" class="btn btn-default pull-right send-comment">
+						Gửi đánh giá
+					</button>
+				</form>
+			</div>
 		</div>
 
 	</div>

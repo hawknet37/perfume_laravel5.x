@@ -406,16 +406,11 @@
     <script src="{{asset('public/frontend/js/prettify.js')}}"></script>
     <script src="{{asset('public/frontend/js/simple.money.format.js')}}"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    {{-- <script src="https://www.paypal.com/sdk/js?client-id=sb"></script>
-    <script>
-        paypal.Buttons().render('body');
-    </script> --}}
-    {{-- <script src="https://www.google.com/recaptcha/api.js" async defer></script> --}}
+
     <script async defer crossorigin="anonymous"
         src="https://connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v6.0&appId=2339123679735877&autoLogAppEvents=1">
     </script>
 
-    {{-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> --}}
     <script>
         $(document).ready(function() {
             // Thêm sự kiện cho các input số lượng sản phẩm
@@ -560,6 +555,92 @@
             })
             })
     </script>
+    {{-- Đánh giá sao --}}
+    <script type="text/javascript">
+        function remove_background(product_id){
+            for(var count = 1; count <= 5; count++){
+                $('#'+product_id+'-'+count).css('color', '#ccc');
+            }
+        }
+        //hover chuột đánh giá sao
+        $(document).on('mouseenter', '.rating', function(){
+            var index = $(this).data("index");
+            var product_id = $(this).data('product_id');
+            remove_background(product_id);
+
+            for(var count = 1; count <= index; count++){
+                $('#'+product_id+'-'+count).css('color', '#ffcc00');
+            }
+        });
+        // Nhả chuột không đánh giá
+        $(document).on('mouseleave', '.rating', function(){
+            var index = $(this).data("index");
+            var product_id = $(this).data('product_id');
+            var rating = $(this).data("rating");
+            remove_background(product_id);
+
+            for(var count = 1; count <= rating; count++){
+                $('#'+product_id+'-'+count).css('color', '#ffcc00');
+            }
+        });
+        // Click đánh giá sao
+        $(document).on('click', '.rating', function(){
+            var index = $(this).data("index");
+            var product_id = $(this).data('product_id');
+            var _token = $('input[name="_token"]').val();
+
+            $.ajax({
+                    url:"{{url('/insert-rating')}}",
+                    method:'post',
+                    data:{index:index,product_id:product_id,_token:_token},
+                    success:function(data){
+                        if(data== 'done'){
+                            alert("Bạn đã đánh giá " + index + " /5");
+                        }
+                        else{
+                            alert("Lỗi đánh giá");
+                        }
+                    }
+            });
+        });
+    </script>
+
+    {{-- Đánh giá bình luận--}}
+    <script type="text/javascript">
+        $(document).ready(function(){
+            load_comment();
+            function load_comment(){
+                var product_id = $('.comment_product_id').val();
+                var _token = $('input[name="_token"]').val();
+                $.ajax({
+                url:"{{url('/load-comment')}}",
+                method:'post',
+                data:{product_id:product_id,_token:_token},
+                success:function(data){
+                    $('#comment_show').html(data);
+                }
+            });
+            }
+            $('.send-comment').click(function(){
+                var product_id = $('.comment_product_id').val();
+                var comment_name = $('.comment_name').val();
+                var comment_content = $('.comment_content').val();
+                var _token = $('input[name="_token"]').val();
+                $.ajax({
+                    url:"{{url('/send-comment')}}",
+                    method:'post',
+                    data:{product_id:product_id,comment_name:comment_name,comment_content:comment_content,_token:_token},
+                    success:function(data){
+                        $('#notify_comment').html('<span class="text text-success">Gửi đánh giá thành công, đánh giá đang chờ duyệt</span>')
+                        load_comment();
+                        $('#notify_comment').fadeOut(2000);
+                        $('#comment_name').val('');
+                        $('#comment_content').val('');
+                    }
+                });
+            });
+        });
+    </script>
 
 
     <script type="text/javascript">
@@ -610,83 +691,15 @@
     });
     //     
     </script>
-    {{-- <script type="text/javascript">
-        $(document).ready(function(){
-            // Tạo một hàm để kiểm tra xem tất cả các select đã được chọn hay chưa
-            function checkAllSelected() {
-                var matp = $('#city').val();
-                var maqh = $('#province').val();
-                var xaid = $('#wards').val();
-                var _token = $('input[name="_token"]').val();
-    
-                // Kiểm tra xem tất cả các select đã được chọn chưa
-                if (matp !== '' && maqh !== '' && xaid !== '') {
-                    $.ajax({
-                        url: '{{ url('/calculate-fee') }}',
-                        method: 'POST',
-                        data: { matp: matp, maqh: maqh, xaid: xaid, _token: _token },
-                        success: function(){
-                            // Xử lý khi tính phí vận chuyển thành công
-                            location.reload(); // Hoặc thực hiện các hành động khác khi thành công
-                        }
-                    });
-                }
-            }
-    
-            // Sử dụng sự kiện 'change' cho các select để gọi hàm kiểm tra khi chúng thay đổi
-            $('#city, #province, #wards').change(function(){
-                checkAllSelected(); // Gọi hàm kiểm tra khi có sự thay đổi trong bất kỳ select nào
-            });
-    
-            // Gọi hàm kiểm tra khi trang được tải (để xác định trạng thái ban đầu của các select)
-            checkAllSelected();
-        });
-    </script> --}}
 
     <script type="text/javascript">
-    
         $(document).ready(function(){
-            function updateCombinedAddress() {
-                var city = $('#city option:selected').text();
-                var province = $('#province option:selected').text();
-                var wards = $('#wards option:selected').text();
-                var combinedAddress = wards + ' - ' + province + ' - ' + city;
-
-                $('#combined_address').val(combinedAddress);
-                localStorage.setItem('savedCombinedAddress', combinedAddress);
-            }
-            function calculateShippingFee() {
-                var matp = $('#city').val();
-                var maqh = $('#province').val();
-                var xaid = $('#wards').val();
-                var _token = $('input[name="_token"]').val();
-
-                if (matp !== '' && maqh !== '' && xaid !== '') {
-                    $.ajax({
-                        url: '{{ url('/calculate-fee') }}',
-                        method: 'POST',
-                        data: { matp: matp, maqh: maqh, xaid: xaid, _token: _token },
-                        success: function(response){
-                            location.reload();
-                        }
-                    });
-                }
-            }
             
-            // Sự kiện change cho các select
-            $('#city, #province, #wards').change(function(){
-                updateCombinedAddress();
-                calculateShippingFee(); // Gọi hàm tính phí vận chuyển khi có sự thay đổi trong bất kỳ select nào
-            });
-            var savedCombinedAddress = localStorage.getItem('savedCombinedAddress');
-            if (savedCombinedAddress) {
-                $('#combined_address').val(savedCombinedAddress);
-            }
-
             $('.send_order').click(function(){
                 // e.preventDefault();
                 
-                swal({                
+                swal({
+                    
                   title: "Xác nhận đơn hàng",
                   text: "Đơn hàng sẽ không được hoàn trả khi đặt, bạn có muốn đặt không?",
                   type: "warning",
@@ -715,6 +728,11 @@
                         var order_coupon = $('.order_coupon').val();
                         var _token = $('input[name="_token"]').val();
 
+                        if (shipping_email === '' || shipping_name === '' || shipping_address === '' || shipping_phone === '' || shipping_notes === '' || shipping_method === '') {
+                            swal("Lỗi", "Vui lòng điền đầy đủ thông tin.", "error");
+                            return;
+                        }
+
                         $.ajax({
                             url: '{{url('/confirm-order')}}',
                             method: 'POST',
@@ -730,10 +748,12 @@
 
                       } else {
                         swal("Đóng", "Đơn hàng chưa được gửi, làm ơn hoàn tất đơn hàng", "error");
-                      }     
-                });            
+                      }             
+                }); 
             });
         });
+    
+
     </script>
     
     <script src="sweetalert2.min.js"></script>
@@ -771,7 +791,7 @@
                     $.ajax({
                         url: '{{url('/add-cart-ajax')}}',
                         method: 'POST',
-                        data:{cart_product_id:cart_product_id,cart_product_name:cart_product_name,cart_product_image:cart_product_image,cart_product_price:cart_product_price,cart_product_qty:cart_product_qty,_token:_token,cart_product_quantity:cart_product_quantity},
+                        data:{cart_product_id:cart_product_id,cart_product_name:cart_product_name,cart_product_image:cart_product_image,cart_product_quantity:cart_product_quantity,cart_product_price:cart_product_price,cart_product_qty:cart_product_qty,_token:_token,cart_product_quantity:cart_product_quantity},
                         success:function(){
 
                             swal({
@@ -798,6 +818,29 @@
             });
         });
     
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $('.calculate_delivery').click(function(){
+                var matp = $('.city').val();
+                var maqh = $('.province').val();
+                var xaid = $('.wards').val();
+                var _token = $('input[name="_token"]').val();
+                if(matp == '' && maqh =='' && xaid ==''){
+                    alert('Làm ơn chọn để tính phí vận chuyển');
+                }else{
+                    $.ajax({
+                    url : '{{url('/calculate-fee')}}',
+                    method: 'POST',
+                    data:{matp:matp,maqh:maqh,xaid:xaid,_token:_token},
+                    success:function(){
+                       location.reload(); 
+                    }
+                    });
+                } 
+        });
+    });
+//     
     </script>
     <script type="text/javascript">
         $(document).ready(function(){

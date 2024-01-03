@@ -73,9 +73,6 @@ public function impersonate_destroy(){
         if($request->author_role){
            $user->roles()->attach(Roles::where('name','author')->first());     
         }
-        if($request->user_role){
-           $user->roles()->attach(Roles::where('name','user')->first());     
-        }
         if($request->admin_role){
            $user->roles()->attach(Roles::where('name','admin')->first());     
         }

@@ -28,7 +28,7 @@
           <th>#</th>
           <th>Tên sản phẩm</th>
           <th>Thư viện ảnh</th>
-          <th>Số lượng</th>
+          {{-- <th>Số lượng</th> --}}
           <th>Slug</th>
           <th>Giá bán</th>
           <th>Giá gốc</th>
@@ -45,7 +45,7 @@
           <th scope="row">{{1 + $key++}}</th>
           <td>{{ $pro->product_name }}</td>
           <td><a href="{{url('add-gallery/'.$pro->product_id)}}">Thêm thư viện ảnh</a></td>
-          <td>{{ $pro->product_quantity }}</td>
+          {{-- <td>{{ $pro->product_quantity }}</td> --}}
           <td>{{ $pro->product_slug }}</td>
           <td>{{ number_format($pro->product_price,0,',','.') }}đ</td>
           <td>{{ number_format($pro->price_cost,0,',','.') }}đ</td>

@@ -39,12 +39,6 @@ class AuthController extends Controller
         'admin_email.email' => 'Địa chỉ Email không hợp lệ',
 
         'admin_password.required' => 'Vui lòng điền mật khẩu',
-
-        
-     
-        
-       
-      
     ]
 );
 

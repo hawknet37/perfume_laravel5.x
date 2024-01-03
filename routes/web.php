@@ -184,6 +184,7 @@ Route::post('/register','AuthController@register');
 Route::post('/login','AuthController@login');
 
 // Send Mail
+
 Route::get('/send-coupon/{coupon_time}/{coupon_condition}/{coupon_number}/{coupon_code}','MailController@send_coupon');
 Route::get('/mail-example','MailController@mail_example');
 Route::get('/quen-mat-khau','MailController@quen_mat_khau');
@@ -201,3 +202,10 @@ Route::post('/insert-gallery/{pro_id}','GalleryController@insert_gallery');
 Route::post('/update-gallery-name','GalleryController@update_gallery_name');
 Route::post('/delete-gallery','GalleryController@delete_gallery');
 Route::post('/update-gallery','GalleryController@update_gallery');
+
+Route::post('/load-comment','ProductController@load_comment');
+Route::post('/send-comment','ProductController@send_comment');
+Route::post('/insert-rating','ProductController@insert_rating');
+
+//Customers
+Route::resource('customer','CustomerController');

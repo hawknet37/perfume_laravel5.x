@@ -17,7 +17,7 @@ class SliderController extends Controller
         if($admin_id){
             return Redirect::to('dashboard');
         }else{
-            return Redirect::to('admin')->send();
+            return Redirect::to('login-auth')->send();
         }
     }
     public function manage_slider(){
